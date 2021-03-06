@@ -6,25 +6,29 @@ function generate(seed: string): Promise<string> {
   return import("./tools/build").then(m => m.generate(seed));
 }
 
-function visualize(input: string, output: string): Promise<string | JSX.Element | JSX.Element[]> {
+function visualize(input: string, output: string): Promise<[string | JSX.Element | JSX.Element[], string]> {
   return import("./tools/build").then(m => {
     try {
       const svgText = m.visualize(input, output);
-      return parse(svgText);
+      const score = m.calc_score(input, output);
+      return [parse(svgText), score];
     } catch (error) {
-      return "Invalid";
+      return ["Invalid", ""];
     }
   });
 }
+
 
 function App() {
   const [seedText, setSeedText] = useState("1");
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
+  const [scoreText, setScoreText] = useState("");
   const [svgElement, setSvgElement] = useState<string | JSX.Element | JSX.Element[]>("");
   console.log(svgElement);
   return (
     <div>
+      <div><p>これは kenkoooo が AHC001 の公式ツールを WebAssembly にして埋め込んだだけのサイトです。壊れているかもしれませんし、正しい結果を返さないかもしれません。自己責任で使ってください。</p></div>
       <div>
         Seed:
       <input type="text" onChange={(e) => setSeedText(e.target.value)} />
@@ -46,7 +50,11 @@ function App() {
         </div>
       </div>
       <div>
-        <button onClick={() => visualize(inputText, outputText).then(s => setSvgElement(s))}>Visualize</button>
+        <button onClick={() => visualize(inputText, outputText).then(([e, score]) => {
+          setSvgElement(e);
+          setScoreText(score);
+        })}>Visualize</button>
+        <div>Score: {scoreText}</div>
         <div style={{ width: 1000 }}>{svgElement}</div>
       </div>
     </div>
