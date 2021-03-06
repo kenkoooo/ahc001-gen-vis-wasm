@@ -17,7 +17,7 @@ module.exports = function override(config, env) {
         new WasmPackPlugin({
             crateDirectory: path.resolve(__dirname, "./src/tools"),
             extraArgs: "--no-typescript",
-            outDir: path.resolve(__dirname, "./src/tools")
+            outDir: path.resolve(__dirname, "./src/tools/build")
         }),
     ]);
 

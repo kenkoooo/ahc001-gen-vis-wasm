@@ -1,0 +1,15 @@
+{
+  "name": "tools",
+  "collaborators": [
+    "kenkoooo <kenkou.n@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "index_bg.wasm",
+    "index.js",
+    "LICENSE_MIT",
+    "LICENSE_APACHE"
+  ],
+  "module": "index.js",
+  "sideEffects": false
+}

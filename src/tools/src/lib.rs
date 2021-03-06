@@ -1,4 +1,6 @@
+mod gen;
 mod utils;
+mod vis;
 
 use wasm_bindgen::prelude::*;
 
@@ -9,11 +11,27 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     fn alert(s: &str);
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, tools!");
+pub fn generate(seed: String) -> String {
+    if let Ok(seed) = seed.parse::<u64>() {
+        gen::gen(seed)
+    } else {
+        format!("Cannot parse seed: {}", seed)
+    }
+}
+
+#[wasm_bindgen]
+pub fn visualize(input_str: String, output_str: String) -> String {
+    let (_, svg) = vis::visualize(&input_str, &output_str);
+    svg
+}
+
+#[wasm_bindgen]
+pub fn calc_score(input_str: String, output_str: String) -> String {
+    let (score, _) = vis::visualize(&input_str, &output_str);
+    score.to_string()
 }

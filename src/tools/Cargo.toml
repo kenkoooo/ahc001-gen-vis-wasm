@@ -11,6 +11,10 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
+rand = { version = "=0.7.3", features = ["small_rng"] }
+rand_chacha = "=0.2.2"
+svg = "0.9.1"
+
 wasm-bindgen = "0.2.63"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
@@ -25,6 +29,8 @@ console_error_panic_hook = { version = "0.1.6", optional = true }
 #
 # Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
 wee_alloc = { version = "0.4.5", optional = true }
+anyhow = "1.0.38"
+proconio = "0.4.1"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"
